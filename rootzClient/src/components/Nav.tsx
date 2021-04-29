@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Sitebar = () => {
     return (
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="light" dark expand="md">
             <NavbarBrand>
                 <Link to="/">Rootz Beauty Supply</Link>
             </NavbarBrand>

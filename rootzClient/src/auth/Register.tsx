@@ -1,52 +1,106 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-class RegisterBox extends Component {
+type AuthProps = {
+    setToken: React.Dispatch<React.SetStateAction<string>>;
+    setRole: React.Dispatch<React.SetStateAction<string>>;
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+type UserState = {
+    username: string;
+    password: string;
+};
 
-  submitRegister(e) {}
-
-  render() {
-    return (
-      <div className="inner-container">
-        <div className="header">
-          Register
-        </div>
-        <div className="box">
-
-          <div className="input-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              className="login-input"
-              placeholder="Username"/>
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input type="text" name="email" className="login-input" placeholder="Email"/>
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              className="login-input"
-              placeholder="Password"/>
-          </div>
-          <button
-            type="button"
-            className="login-btn"
-            onClick={this
-            .submitRegister
-            .bind(this)}>Register</button>
-        </div>
-      </div>
-    );
-  }
+export class Register extends Component <AuthProps, UserState> {
+    constructor (props: AuthProps) {
+        super(props);
+        this.state = {
+            username: "",
+            password: "",
+        };
+    }
+    handleSubmit = (e: any) => {
+        if (
+            this.state.username !== ""  &&
+            this.state.password !== ""
+        ) {
+            e.preventDefault();
+            fetch('http://localhost:3000/user/create',{
+                method: 'POST',
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password,
+                    admin: "false",
+                }),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+        }) 
+            .then((response) => response.json()) 
+            .then((data) => {
+            this.props.setToken(data.setToken);
+        });
+        } else {
+            alert("All fields must be completed");
+        }
+    };
+    handleUsernameInput = (e: any) => {
+        const username = e.target.value;
+        this.setState({ username: username });
+    };
+  
+    handlePasswordInput = (e: any) => {
+        const password = e.target.value;
+        this.setState({ password: password });
+    };
+    
+    render (){
+        return(
+            <div id = "registerDiv">
+                <h1 id="registerHeading">Register</h1>
+                <ValidatorForm
+                    style={{
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        width: "35%",
+                        display: "block",
+                        backgroundColor: "#FFFFFF",
+                    }}
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                    onError={(err) => console.log(err)}
+                    >
+                    <TextValidator
+                        label="Username"
+                        onChange={(e) => this.handleUsernameInput(e)}
+                        name="Username"
+                        value={this.state.username}
+                        validators={["minStringLength:6", "required"]}
+                        errorMessages={[
+                        "Username should be more than 6 letters",
+                        "this field is required",
+                        ]}
+                        autoComplete="off"
+                    />
+                    <TextValidator
+                        label="Password"
+                        onChange={this.handlePasswordInput}
+                        name="password"
+                        value={this.state.password}
+                        type="password"
+                        validators={["minStringLength:6", "required"]}
+                        errorMessages={[
+                        "password should be more than 8 letters",
+                        "this field is required",
+                        ]}
+                    />
+                    <br />
+                    <Button variant="contained" onClick={this.handleSubmit}>
+                        Register
+                    </Button>
+                    </ValidatorForm>
+            </div>
+        )
+    }
 }
