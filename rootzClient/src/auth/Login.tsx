@@ -26,12 +26,12 @@ export class Login extends Component <AuthProps, UserState> {
         e.preventDefault();
         fetch('http://localhost:3000/user/login',{
           method: 'POST',
+          body: JSON.stringify({ user: {
+            email: this.state.email,
+            password: this.state.password,
+            }  }),
           headers: new Headers({
               "Content-Type": "application/json",
-          }),
-          body: JSON.stringify({
-              email: this.state.email,
-              password: this.state.password,
           }),
         }) 
           .then((res) => {
@@ -41,7 +41,7 @@ export class Login extends Component <AuthProps, UserState> {
             }) 
             .then((data) => {
                 console.log(data);
-                this.props.setToken(data.updateToken);
+                this.props.setToken(data.setToken);
                 this.props.setRole(data.user.isAdmin);
                 console.log("User logged in");
             })

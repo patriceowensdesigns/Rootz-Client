@@ -8,7 +8,7 @@ type AuthProps = {
 };
 
 type UserState = {
-    username: string;
+    email: string;
     password: string;
 };
 
@@ -16,30 +16,32 @@ export class Register extends Component <AuthProps, UserState> {
     constructor (props: AuthProps) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
         };
     }
     handleSubmit = (e: any) => {
         if (
-            this.state.username !== ""  &&
+            this.state.email !== ""  &&
             this.state.password !== ""
         ) {
             e.preventDefault();
             fetch('http://localhost:3000/user/create',{
                 method: 'POST',
-                body: JSON.stringify({
-                    username: this.state.username,
+                body: JSON.stringify({ user: {
+                    email: this.state.email,
                     password: this.state.password,
-                    admin: "false",
-                }),
+                    isAdmin: "false",
+                } }),
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
         }) 
-            .then((response) => response.json()) 
+            .then((res) => res.json()) 
             .then((data) => {
+            console.log(data)
             this.props.setToken(data.setToken);
+            console.log("User created")
         });
         } else {
             alert("All fields must be completed");
@@ -47,7 +49,7 @@ export class Register extends Component <AuthProps, UserState> {
     };
     handleUsernameInput = (e: any) => {
         const username = e.target.value;
-        this.setState({ username: username });
+        this.setState({ email: username });
     };
   
     handlePasswordInput = (e: any) => {
@@ -75,7 +77,7 @@ export class Register extends Component <AuthProps, UserState> {
                         label="Username"
                         onChange={(e) => this.handleUsernameInput(e)}
                         name="Username"
-                        value={this.state.username}
+                        value={this.state.email}
                         validators={["minStringLength:6", "required"]}
                         errorMessages={[
                         "Username should be more than 6 letters",
