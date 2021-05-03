@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 type AuthProps = {
-    setToken: React.Dispatch<React.SetStateAction<string>>;
+    sessionToken: React.Dispatch<React.SetStateAction<string>>;
     setRole: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -40,7 +40,7 @@ export class Register extends Component <AuthProps, UserState> {
             .then((res) => res.json()) 
             .then((data) => {
             console.log(data)
-            this.props.setToken(data.setToken);
+            this.props.sessionToken(data.sessionToken);
             console.log("User created")
         });
         } else {

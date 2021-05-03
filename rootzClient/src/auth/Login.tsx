@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 type AuthProps = {
-    setToken: React.Dispatch<React.SetStateAction<string>>;
+    sessionToken: React.Dispatch<React.SetStateAction<string>>;
     setRole: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -41,7 +41,7 @@ export class Login extends Component <AuthProps, UserState> {
             }) 
             .then((data) => {
                 console.log(data);
-                this.props.setToken(data.setToken);
+                this.props.sessionToken(data.sessionToken);
                 this.props.setRole(data.user.isAdmin);
                 console.log("User logged in");
             })

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
-
 import { Login } from './Login';
 import { Register } from './Register';
 
 type AuthProps = {
-    setToken: React.Dispatch<React.SetStateAction<string>>
+    sessionToken: React.Dispatch<React.SetStateAction<string>>
     setRole: React.Dispatch<React.SetStateAction<string>>
 };
 
@@ -42,14 +41,14 @@ export class Auth extends Component <AuthProps, UserState> {
                 {this.state.showLogin ? (
                     <div>
                         <Register
-                            setToken={this.props.setToken}
+                            sessionToken={this.props.sessionToken}
                             setRole={this.props.setRole} 
                             />
                     </div>
                 ) : (
                     <div>
                         <Login
-                            setToken={this.props.setToken}
+                            sessionToken={this.props.sessionToken}
                             setRole={this.props.setRole} 
                             />
                     </div>
