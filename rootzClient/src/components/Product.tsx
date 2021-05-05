@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Container } from '@material-ui/core/';
-import Typography from '@material-ui/core/Typography';
+import Container from "@material-ui/core/Container";
 import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 type AuthProps = {
-    sessionToken: React.Dispatch<React.SetStateAction<string>>
+    actualToken: string;
 }
 
 type ProductState ={
@@ -30,15 +30,7 @@ export default class Product extends Component <AuthProps, ProductState>{
     constructor(props: AuthProps) {
         super(props)
         this.state = {
-            productEntry: [
-                // {
-                //     scn: "",
-                //     productName: "",
-                //     image: "",
-                //     retailPrice: "",
-                //     onHand: "",
-                // },
-            ],
+            productEntry: [],
         }
     }
 
@@ -47,7 +39,7 @@ export default class Product extends Component <AuthProps, ProductState>{
                     method: 'GET',
                     headers: new Headers({
                         'Content-Type': 'application/json',
-                        Authorization: this.props.sessionToken,
+                        'Authorization': this.props.actualToken,
                     }),
             })
             .then((res) => res.json())
@@ -57,8 +49,9 @@ export default class Product extends Component <AuthProps, ProductState>{
             })
             .catch((err) => console.log(err));
         }
-        componentDidMount () {
+        componentDidMount() {
             this.fetchProducts()
+            console.log("Component *DID* mount")
         }
 
         render(){
@@ -68,26 +61,26 @@ export default class Product extends Component <AuthProps, ProductState>{
                         <Typography color="textPrimary" gutterBottom variant="h2" align="center">
                             Products
                         </Typography>
-                        <Grid container spacing={3}>
-                            {this.state.productEntry.map(([]) => (
-                                <Grid item xs={12} sm={4} key={Product.id}>
+                        {/* <Grid container spacing={3}>
+                            {this.state.productEntry.map((product) => (
+                                <Grid item xs={12} sm={4} key={product.id}>
                                     <Card className={classes.card}>
                                         <CardMedia
                                         className={classes.media}
-                                        image={Product.image}
+                                        image={product.image}
                                         />
                                         <CardContent>
                                         <Typography color="primary" variant="h5">
-                                            {Product.productName}
+                                            {product.productName}
                                         </Typography>
                                         <Typography color="textSecondary" variant="subtitle2">
-                                            {Product.retailPrice}
+                                            {product.retailPrice}
                                         </Typography>
                                         </CardContent>
                                     </Card>
                                 </Grid>
                             ))}
-                            </Grid>
+                            </Grid> */}
                     </Container>
                 </div>
             );

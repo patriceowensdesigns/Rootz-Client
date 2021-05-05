@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
@@ -44,6 +45,7 @@ export class Login extends Component <AuthProps, UserState> {
                 this.props.sessionToken(data.sessionToken);
                 this.props.setRole(data.user.isAdmin);
                 console.log("User logged in");
+                <Redirect to="/product/" />
             })
             .catch((err) => alert(err));
       } else {

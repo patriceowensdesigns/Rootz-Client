@@ -6,8 +6,9 @@ import Product from './Product';
 import Cart from './Cart';
 
 interface MainProps {
-    sessionToken: React.Dispatch<React.SetStateAction<string>>
-    setRole: React.Dispatch<React.SetStateAction<string>>
+    sessionToken: React.Dispatch<React.SetStateAction<string>>,
+    setRole: React.Dispatch<React.SetStateAction<string>>,
+    actualToken: string,
 }
 
  function Main (props: MainProps) {
@@ -20,7 +21,9 @@ interface MainProps {
                 <Nav />
                 <Auth sessionToken={props.sessionToken} setRole={props.setRole} />
                 <Switch>
-                    <Route exact path="/product" component={ Product } />
+                    <Route path="/product">
+                        <Product actualToken={props.actualToken}/>
+                    </Route>
                     <Route exact path="cart" component={ Cart } />
                 </Switch>
             </Router>

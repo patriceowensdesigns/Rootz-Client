@@ -4,16 +4,15 @@ import './App.css'
 
 
 import Main from './components/Main';
-import { Auth } from './auth/Auth';
-import Product from './components/Product';
 
 function App() {
   const [sessionToken, setSessionToken] = useState('');
   const [role, setRole] = useState('');
 
+  
     return (
     <div className="App">
-      <Main sessionToken={setSessionToken} setRole={setRole} />
+      <Main sessionToken={setSessionToken} setRole={setRole} actualToken={sessionToken} />
     </div>
   )
 }

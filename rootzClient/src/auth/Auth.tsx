@@ -4,8 +4,8 @@ import { Login } from './Login';
 import { Register } from './Register';
 
 type AuthProps = {
-    sessionToken: React.Dispatch<React.SetStateAction<string>>
-    setRole: React.Dispatch<React.SetStateAction<string>>
+    sessionToken: React.Dispatch<React.SetStateAction<string>>,
+    setRole: React.Dispatch<React.SetStateAction<string>>,
 };
 
 type UserState = {
@@ -42,7 +42,7 @@ export class Auth extends Component <AuthProps, UserState> {
                     <div>
                         <Register
                             sessionToken={this.props.sessionToken}
-                            setRole={this.props.setRole} 
+                            setRole={this.props.setRole}
                             />
                     </div>
                 ) : (
