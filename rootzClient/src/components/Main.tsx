@@ -24,7 +24,9 @@ interface MainProps {
                     <Route path="/product">
                         <Product actualToken={props.actualToken}/>
                     </Route>
-                    <Route exact path="cart" component={ Cart } />
+                    <Route path="/cart">
+                        <Cart actualToken={props.actualToken}/>
+                    </Route>
                 </Switch>
             </Router>
         </>

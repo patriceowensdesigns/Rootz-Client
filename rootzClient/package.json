@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "@types/react-material-ui-form-validator": "^2.1.0",
     "@types/styled-components": "^5.1.9",
     "antd": "^4.15.3",
